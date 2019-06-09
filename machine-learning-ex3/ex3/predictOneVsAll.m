@@ -30,7 +30,6 @@ X = [ones(m, 1) X];
 %       for each row.
 %       
 
-predout = zeros(m, num_labels);
 predout = sigmoid(X * transpose(all_theta));
 [maxv, maxi] = max(predout, [], 2);
 p = maxi;
