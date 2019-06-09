@@ -36,17 +36,18 @@ grad = zeros(size(theta));
 %           grad = grad + YOUR_CODE_HERE (using the temp variable)
 %
 
-
-
-
-
-
-
-
-
+prediction = sigmoid(X * theta);
+summ = sum(-y .* log(prediction) - ((1 - y) .* log(1-prediction)));
+J = summ / m;
+temp = theta; temp(1) = 0;
+summThetaSquared = sum(temp .^ 2);
+J = J + lambda * summThetaSquared / (2 * m); 
 
 % =============================================================
 
-grad = grad(:);
+grad = transpose(X) * (prediction - y) / m;
+temp = grad(1);
+grad = grad + lambda * theta / m;
+grad(1) = temp;
 
 end
