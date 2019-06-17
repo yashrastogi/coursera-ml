@@ -92,7 +92,7 @@ J = summ / m;
 
 % Regularization for 3 layer neural network architecture
 
-% Regularization parameter: Layer 1 (hidden layer)
+% Regularization parameter: Layer 1 (input layer)
 theta1Rows = size(Theta1)(1,1);
 theta1Columns = size(Theta1)(1,2);
 paramL1=0;
@@ -102,7 +102,7 @@ for j=1:theta1Rows,
     end
 end
 
-% Regularization parameter: Layer 2 (output layer)
+% Regularization parameter: Layer 2 (hidden layer)
 theta2Rows = size(Theta2)(1,1);
 theta2Columns = size(Theta2)(1,2);
 paramL2=0;
@@ -118,15 +118,16 @@ regTerm = lambda * ( paramL1+paramL2 ) / (2*m);
 J = J + regTerm;
 
 
+% Gradient calculation
+Delta3 = a3 - y;
+z2 = [ones(1, m); z2];
+Delta2 = transpose(Theta2) * Delta3 .* sigmoidGradient(z2);
+Delta2 = Delta2(2:size(Delta2)(1,1), 1:size(Delta2)(1,2));
 
-
-
-
-
-
-
-
-
+Theta2_grad = Theta2_grad + Delta3 * transpose(a2);
+Theta2_grad = Theta2_grad / m;
+Theta1_grad = Theta1_grad + Delta2 * transpose(a1);
+Theta1_grad = Theta1_grad / m;
 
 
 % -------------------------------------------------------------

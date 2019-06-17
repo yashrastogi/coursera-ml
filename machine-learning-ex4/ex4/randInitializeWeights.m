@@ -22,7 +22,11 @@ W = zeros(L_out, 1 + L_in);
 
 
 
+% Randomly initialize the weights to small values
+epsilon_init = 0.12;
+% epsilon_init = 6 ^ (1/2) / (L_in + L_out) ^ (1/2);
 
+W = rand(L_out, 1 + L_in) * 2 * epsilon_init − epsilon_init;
 
 
 
