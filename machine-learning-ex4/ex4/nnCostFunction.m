@@ -62,11 +62,60 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+a1 = transpose([ones(m,1) X]);
+z2 = Theta1 * a1;
+a2 = sigmoid(z2);
+a2 = [ones(1, m); a2];
+z3 = Theta2 * a2;
+a3 = sigmoid(z3);
+prediction = a3;
+temp = y;
+y = zeros(m, num_labels);
+for i=1:m,
+    for j=1:num_labels,
+        if temp(i) == j,
+            y(i, j) = 1;
+        end
+    end
+end
 
+summ=0;
+y = transpose(y);
+for i=1:m,
+    for k=1:num_labels,
+        summ = summ - ( y(k, i) * log(prediction(k, i)) + (1 - y(k, i)) * log(1 - prediction(k, i)));
+    end
+end
+J = summ / m;
 
+% keyboard;
 
+% Regularization for 3 layer neural network architecture
 
+% Regularization parameter: Layer 1 (hidden layer)
+theta1Rows = size(Theta1)(1,1);
+theta1Columns = size(Theta1)(1,2);
+paramL1=0;
+for j=1:theta1Rows,
+    for k=2:theta1Columns,
+        paramL1 = paramL1 + Theta1(j, k) ^ 2;
+    end
+end
 
+% Regularization parameter: Layer 2 (output layer)
+theta2Rows = size(Theta2)(1,1);
+theta2Columns = size(Theta2)(1,2);
+paramL2=0;
+for j=1:theta2Rows,
+    for k=2:theta2Columns,
+        paramL2 = paramL2 + Theta2(j, k) ^ 2;
+    end
+end
+
+% Total Regularization Term
+regTerm = lambda * ( paramL1+paramL2 ) / (2*m);
+
+J = J + regTerm;
 
 
 
@@ -86,6 +135,5 @@ Theta2_grad = zeros(size(Theta2));
 
 % Unroll gradients
 grad = [Theta1_grad(:) ; Theta2_grad(:)];
-
 
 end
