@@ -126,9 +126,12 @@ Delta2 = Delta2(2:size(Delta2)(1,1), 1:size(Delta2)(1,2));
 
 Theta2_grad = Theta2_grad + Delta3 * transpose(a2);
 Theta2_grad = Theta2_grad / m;
+temp = lambda * Theta2 / m;
+Theta2_grad(:, 2:end) = Theta2_grad(:, 2:end) + temp(:, 2:end) ;
 Theta1_grad = Theta1_grad + Delta2 * transpose(a1);
-Theta1_grad = Theta1_grad / m;
-
+Theta1_grad = Theta1_grad / m; 
+temp = lambda * Theta1 / m;
+Theta1_grad(:, 2:end) = Theta1_grad(:, 2:end) + temp(:, 2:end) ;
 
 % -------------------------------------------------------------
 
