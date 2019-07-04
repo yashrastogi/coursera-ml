@@ -40,15 +40,25 @@ Theta_grad = zeros(size(Theta));
 %                     partial derivatives w.r.t. to each element of Theta
 %
 
+% keyboard;
+predictionError = ((X * Theta') - Y);
+predictionErrorSq = predictionError .^ 2;
 
+% Use only those examples where R=1
+J = sum(sum(predictionErrorSq .* R)) / 2;
 
+X_grad = (predictionError .* R) * Theta;
+Theta_grad = (predictionError .* R)' * X;
 
+thetaRegTerm = lambda * sum(sum(Theta .^ 2)) / 2;
+xRegTerm = lambda * sum(sum(X .^ 2)) / 2;
 
+% Regularized cost
+J = J + thetaRegTerm + xRegTerm;
 
-
-
-
-
+% Regularized gradient
+X_grad = X_grad + lambda .* X;
+Theta_grad = Theta_grad + lambda .* Theta;
 
 
 
