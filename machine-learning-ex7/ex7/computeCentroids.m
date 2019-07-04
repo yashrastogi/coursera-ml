@@ -26,12 +26,18 @@ centroids = zeros(K, n);
 % Note: You can use a for-loop over the centroids to compute this.
 %
 
-
-
-
-
-
-
+% keyboard;
+for centroid=1:K,
+    sumTemp = zeros(1, n);
+    numPoints = 0;
+    for example=1:m,
+        if(idx(example) == centroid),
+            sumTemp = sumTemp + X(example, :);
+            numPoints++;
+        end
+    end
+    centroids(centroid, :) = sumTemp / numPoints;
+end
 
 % =============================================================
 

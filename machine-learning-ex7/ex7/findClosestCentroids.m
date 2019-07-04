@@ -21,11 +21,12 @@ idx = zeros(size(X,1), 1);
 % Note: You can use a for-loop over the examples to compute this.
 %
 
+% keyboard;
 for i=1:size(X,1),
     lowestNorm = 0;
     centroid = 0;
     for j=1:K,
-        norm = sum(abs(X(i, :) - centroids(j, :))) .^ 2;
+        norm = sum((X(i, :) - centroids(j, :)) .^ 2);
         if or(j == 1, norm < lowestNorm),
             lowestNorm = norm;
             centroid = j;
@@ -33,9 +34,6 @@ for i=1:size(X,1),
     end
     idx(i) = centroid;
 end
-
-
-
 
 % =============================================================
 
